@@ -137,13 +137,19 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\..\Downloads\src\glad.c" />
     <ClCompile Include="OpenGL_Tutorial.cpp" />
+    <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragment.frag" />
     <None Include="Shaders\vertex.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\container.jpg" />
+    <Image Include="Assets\wall.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

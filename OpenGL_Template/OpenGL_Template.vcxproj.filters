@@ -54,5 +54,8 @@
     <Image Include="Assets\wall.jpg">
       <Filter>Resource Files\Assets</Filter>
     </Image>
+    <Image Include="Assets\awesomeface.png">
+      <Filter>Resource Files\Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

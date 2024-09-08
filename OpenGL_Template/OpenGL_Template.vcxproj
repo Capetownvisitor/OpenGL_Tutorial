@@ -148,6 +148,7 @@
     <None Include="Shaders\vertex.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\awesomeface.png" />
     <Image Include="Assets\container.jpg" />
     <Image Include="Assets\wall.jpg" />
   </ItemGroup>

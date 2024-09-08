@@ -65,7 +65,7 @@ int main() {
 	// Build and compile the Shaders
 	// ---------------------------------------------------------------------------------------------
 	Shader ourShader("Shaders/vertex.vert", "Shaders/fragment.frag");
-	
+
 	// Vertices
 	// ---------------------------------------------------------------------------------------------
 	float vertices[] = {
@@ -89,9 +89,14 @@ int main() {
 	// Textures
 	// ---------------------------------------------------------------------------------------------
 
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	// texture 1
+	// ---------
+	unsigned int textures[2];
+	glGenTextures(2, textures);
+
+	// Activate texture unit 0, and bind the texture
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 	// Which repeat to use: Mirrored
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
@@ -110,6 +115,26 @@ int main() {
 
 	if (data) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		std::cout << "FAILED TO LOAD IMAGE \n";
+	}
+	stbi_image_free(data);
+
+	// texture 2
+	// ---------
+
+	// Activate texture unit 1, and bind the texture
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+
+	// Flip the image
+	stbi_set_flip_vertically_on_load(true);
+	data = stbi_load("Assets/awesomeface.png", &width, &height, &nrChannels, 0);
+
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else {
@@ -161,6 +186,11 @@ int main() {
 	//-----------------------------------------------------------------------------------------------------------------------------------------
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//-----------------------------------------------------------------------------------------------------------------------------------------
+
+	// Tell OpenGL that we use different texture units
+	ourShader.use(); // don't forget to activate the shader before setting uniforms!  
+	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0); // set it manually
+	ourShader.setInt("texture2", 1); // or with shader class
 
 	// Render loop
 	while (!glfwWindowShouldClose(window))
